@@ -1,0 +1,38 @@
+services:
+  keycloak-db:
+    image: docker.io/bitnami/postgresql:latest
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - POSTGRESQL_USERNAME=${KEYCLOAK_DB_USER}
+      - POSTGRESQL_DATABASE=${KEYCLOAK_DB_DATABASE}
+    volumes:
+      - 'postgresql_data:/bitnami/postgresql'
+    networks:
+      - microservice-network
+
+  keycloak:
+    image: docker.io/bitnami/keycloak:latest
+    env_file:
+      - .env
+    ports:
+      - "${KEYCLOAK_PORT}:8080"
+    environment:
+      - KEYCLOAK_CREATE_ADMIN_USER=true
+      - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
+      - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
+      - KEYCLOAK_DATABASE_HOST=keycloak-db
+
+      - KC_HTTP_RELATIVE_PATH=/keycloak
+      - KC_PROXY=edge
+
+    depends_on:
+      - keycloak-db
+    networks:
+      - microservice-network
+
+volumes:
+  postgresql_data:
+
+networks:
+  microservice-network:
+    external: true
