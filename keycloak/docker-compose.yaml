@@ -21,10 +21,11 @@ services:
       - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
       - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
       - KEYCLOAK_DATABASE_HOST=keycloak-db
-
+      - KEYCLOAK_EXTRA_ARGS=--import-realm
       - KC_HTTP_RELATIVE_PATH=/keycloak
       - KC_PROXY=edge
-
+    volumes:
+      - ./imports:/opt/bitnami/keycloak/data/import
     depends_on:
       - keycloak-db
     networks:
