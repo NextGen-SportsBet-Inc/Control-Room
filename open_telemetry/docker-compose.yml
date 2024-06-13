@@ -7,6 +7,7 @@ services:
       - ./otel-collector-config.yml:/etc/otel-collector-config.yml
     ports:
       - "4317:4317"
+      - "4318:4318"
       - "9464:9464"
     command:
       --config /etc/otel-collector-config.yml
@@ -32,22 +33,20 @@ services:
       - grafana-storage:/var/lib/grafana
     networks:
       - microservice-network
-    
-  jaeger:
-    image: jaegertracing/all-in-one:latest
+
+  zipkin:
+    image: openzipkin/zipkin:latest
     ports:
-      - "16686:16686"
-      - "14268:14268"
+      - "9411:9411"
     networks:
       - microservice-network
 
   loki:
-    image: grafana/loki:2.2.1
+    image: grafana/loki:latest
     ports:
       - "3100:3100"
-    command: -config.file=/etc/loki/local-config.yaml
     volumes:
-      - ./loki-config.yaml:/etc/loki/local-config.yaml
+      - ./loki-config.yml:/etc/loki/local-config.yml
     networks:
       - microservice-network
 

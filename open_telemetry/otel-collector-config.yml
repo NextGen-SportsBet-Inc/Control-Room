@@ -9,8 +9,8 @@ exporters:
     endpoint: "0.0.0.0:9464"
   otlp:
     endpoint: "localhost:4317"
-  jaeger:
-    endpoint: "http://jaeger:14268/api/traces"
+  zipkin:
+    endpoint: "http://zipkin:9411/api/v2/spans"
   loki:
     endpoint: "http://loki:3100/loki/api/v1/push"
 
@@ -18,7 +18,7 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      exporters: [jaeger, otlp]
+      exporters: [zipkin]
     metrics:
       receivers: [otlp]
       exporters: [prometheus]

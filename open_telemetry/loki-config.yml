@@ -43,7 +43,7 @@ chunk_store_config:
 
 table_manager:
   retention_deletes_enabled: true
-  retention_period: 168h
+  retention_period: 24h
 
 compactor:
   working_directory: /tmp/loki/compactor
@@ -54,5 +54,5 @@ ruler:
     type: local
     local:
       directory: /tmp/loki/rules
-  rule_path: /tmp/loki/rules
-  alertmanager_url: http://localhost:9093
+    rule_path: /tmp/loki/rules
+    alertmanager_url: http://localhost:9093
