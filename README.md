@@ -1,6 +1,6 @@
 # Control-Room
 
-Repository for Nginx and Keycloak configurations
+Repository Nginx, Keycloak, Open Telemetry and RabbitMQ configurations
 
 ## How to run:
  1. Create docker network:
